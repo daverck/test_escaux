@@ -2,7 +2,7 @@
 {
     "database": {
         "host": "localhost",
-        "port": 1433,
+        "port": 3306,
         "user": "escaux",
         "password": "escaux",
         "database": "test_escaux"

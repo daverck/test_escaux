@@ -33,12 +33,12 @@ export default class Comments extends Model {
     datetime_created: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: Sequelize.fn('getdate')
+      defaultValue: Sequelize.fn('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
     tableName: 'Comments',
-    schema: 'dbo',
+    // schema: 'dbo',
     timestamps: false,
     indexes: [
       {

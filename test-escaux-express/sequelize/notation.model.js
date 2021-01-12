@@ -29,12 +29,12 @@ export default class Notations extends Model {
     datetime_created: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: Sequelize.fn('getdate')
+      defaultValue: Sequelize.fn('CURRENT_TIMESTAMP ')
     }
   }, {
     sequelize,
     tableName: 'Notations',
-    schema: 'dbo',
+    // schema: 'dbo',
     timestamps: false,
     indexes: [
       {
