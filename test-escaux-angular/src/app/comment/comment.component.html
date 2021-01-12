@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-header text-center">
+        <ng-container *ngIf=(!readonly)>Enter a comment</ng-container>
+        <ng-container *ngIf=(readonly)>commentaire écrit par {{user.username}} le {{comment_?.datetime_created | date : "medium"}}</ng-container>
+    </div>
+    <div class="card-body">
+        <p *ngIf=(readonly) class="card-text text-center">{{comment}}</p>
+
+        <form *ngIf=(!readonly) [formGroup]="commentForm" (ngSubmit)="onSubmit(commentForm.value)">
+            <!-- <div>
+              <label for="comment">Comment</label> -->
+              <textarea id="comment" class="form-control" formControlName="comment" placeholder="comment" required></textarea>
+            <!-- </div> -->
+          
+            <div class="text-center">
+                <button class="btn btn-primary mt-3" type="submit">Envoyer</button>
+            </div>
+        </form>
+    </div>
+</div>

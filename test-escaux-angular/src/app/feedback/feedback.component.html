@@ -1,0 +1,49 @@
+
+<div class="card">
+    <div class="card-header text-center">
+        <!-- <ngb-rating *ngIf=(readonly) [(rate)]="currentRate" [max]="5" [readonly]=true class="feedback-rating">
+            <ng-template let-fill="fill" let-index="index">
+                <i *ngIf="fill === 100" class="material-icons">star</i>
+                <i *ngIf="fill !== 100" class="material-icons">star_border</i>
+            </ng-template>
+        </ngb-rating> -->
+        
+        <a *ngIf="readonly && browse_link" routerLink="/feedback-browse/{{pk}}" class="btn btn-sm btn-primary mr-1 ml-1 float-right">
+            <i class="material-icons">open_in_new</i>
+        </a>
+        <p *ngIf=(readonly) class="notation_total">total  : {{totalNotation}}</p>
+        <div *ngIf=(readonly) class="btn-notation">
+            <button class="btn btn-primary ml-1" (click)="onNotation(-1)"><i class="material-icons">exposure_neg_1</i></button>
+            <button class="btn btn-primary ml-1" (click)="onNotation(0)"><i class="material-icons">exposure_zero</i></button>
+            <button class="btn btn-primary ml-1" (click)="onNotation(1)"><i class="material-icons">exposure_plus_1</i></button>
+        </div>
+
+        <ng-container *ngIf=(!readonly)>Enter a feedback</ng-container>
+        <ng-container *ngIf=(readonly)>feedback écrit par {{user.username}} le {{feedback?.datetime_created | date : "medium"}}</ng-container>
+    </div>
+    <div class="card-body">
+        
+        <div class="text-center">
+            <ngb-rating [(rate)]="currentRate" [max]="5" [readonly]=(readonly) class="feedback-rating">
+                <ng-template let-fill="fill" let-index="index">
+                    <i *ngIf="fill === 100" class="material-icons">star</i>
+                    <i *ngIf="fill !== 100" class="material-icons">star_border</i>
+                </ng-template>
+            </ngb-rating>
+        </div>
+        
+        <form *ngIf=(!readonly) [formGroup]="feedbackForm" (ngSubmit)="onSubmit(feedbackForm.value)">
+            <!-- <div>
+            <label for="comment">Comment</label> -->
+            <textarea id="note" class="form-control" formControlName="note" placeholder="comment" required></textarea>
+            <!-- </div> -->
+            
+            <div class="text-center">
+                <button class="btn btn-primary mt-3" type="submit">Envoyer</button>
+            </div>          
+        </form>
+
+        <p *ngIf=(readonly) class="card-text text-center">{{note}}</p>
+    </div>
+</div>
+    

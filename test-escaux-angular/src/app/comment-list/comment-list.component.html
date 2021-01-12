@@ -1,0 +1,6 @@
+<app-comment *ngFor="let comment of list_comment | async" 
+    [readonly]=(true) 
+    [comment]=(comment.comment)
+    [pk]=(comment.pk)
+    [fk_feedback]=(comment.fk_feedback)
+    [fk_user]=(comment.fk_user)></app-comment>

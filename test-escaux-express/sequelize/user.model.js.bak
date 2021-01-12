@@ -1,0 +1,46 @@
+import _sequelize from 'sequelize';
+const { Model, Sequelize, DataTypes } = _sequelize;
+
+export default class Users extends Model {
+  static init(sequelize) {
+  super.init({
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    firstName: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    username: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    hash: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    tableName: 'Users',
+    schema: 'dbo',
+    timestamps: true,
+    indexes: [
+      {
+        name: "PK__Users__3213E83F2931547B",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
+  return Users;
+  }
+}

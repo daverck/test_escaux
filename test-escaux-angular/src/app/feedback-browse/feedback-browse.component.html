@@ -1,0 +1,19 @@
+<div class="container">
+    <h1>feedback-browse</h1>
+
+    <h3>the feedback</h3>
+    <app-feedback   [pk]=(feedback.pk) 
+                    [fk_user]=(feedback.fk_user) 
+                    [note]=(feedback.note) 
+                    [currentRate]=(feedback.rating) 
+                    [readonly]=(true)
+                    [browse_link]=(false)></app-feedback>
+
+    <h3>reaction(s) to the feedback</h3>
+    <app-comment-list [feedback_pk]=(feedback.pk)></app-comment-list>
+
+    <h3>write a comment</h3>
+    <app-comment [fk_feedback]=(feedback.pk)
+                    [fk_user]=(user.id) 
+                    [readonly]=(false)></app-comment>
+</div>
