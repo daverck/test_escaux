@@ -1,5 +1,7 @@
 ﻿import express from 'express';
 const router = express.Router();
+export default router;
+
 import Joi from 'joi';
 import validateRequest from '../_middleware/validate-request.js';
 import authorize from '../_middleware/authorize.js';
@@ -11,9 +13,6 @@ router.get('/:id', authorize(), getById);
 router.put('/:id', authorize(), updateSchema, update);
 router.delete('/:id', authorize(), _delete);
 router.post('/', authorize(), createSchema, create);
-
-// module.exports = router;
-export default router;
 
 function getAll(req, res, next) {
     feedbackService.getAll()
@@ -38,7 +37,8 @@ function createSchema(req, res, next) {
 
 function create(req, res, next) {
     feedbackService.create(req.body)
-        .then(() => res.json({ message: 'Feedback creation successful' }))
+        .then((x) => res.json({ message: 'Feedback creation successful',
+                               feedback: x }))
         .catch(next);
 }
 

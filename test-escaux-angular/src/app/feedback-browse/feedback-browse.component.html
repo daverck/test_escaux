@@ -10,10 +10,11 @@
                     [browse_link]=(false)></app-feedback>
 
     <h3>reaction(s) to the feedback</h3>
-    <app-comment-list [feedback_pk]=(feedback.pk)></app-comment-list>
+    <app-comment-list #commentsForFeedback [feedback_pk]=(feedback.pk)></app-comment-list>
 
     <h3>write a comment</h3>
-    <app-comment [fk_feedback]=(feedback.pk)
+    <app-comment    (newCommentEvent)="this.commentListCmp.commentAdded($event)" 
+                    [fk_feedback]=(feedback.pk)
                     [fk_user]=(user.id) 
                     [readonly]=(false)></app-comment>
 </div>

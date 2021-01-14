@@ -15,7 +15,7 @@ import { AccountService } from '@app/_services';
 })
 export class FeedbackListComponent implements OnInit {
   user: User;
-  list_feedback: Observable<Feedback[]> = null;
+  list_feedback: Observable<Feedback[]>;
 
   constructor(public FeedbackService: FeedbackService, 
               private accountService: AccountService) { 
@@ -23,10 +23,11 @@ export class FeedbackListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.list_feedback = this.FeedbackService.getAll()
-    // this.FeedbackService.getAll()
-    //   .pipe(first())
-    //   .subscribe(list_feedback => this.list_feedback = list_feedback);
+    this.list_feedback = this.FeedbackService.getAll();
   }
 
+  addFeedback(feedback : Feedback)
+  {
+    this.list_feedback = this.FeedbackService.getAll();
+  }
 }

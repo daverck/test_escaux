@@ -20,7 +20,6 @@ async function getAll() {
 }
 
 async function getForFeedbackAndUser(fk_feedback, fk_user) {
-    // console.log({fk_feedback, fk_user});
     return await db.Notations.findOne({ where: { fk_user, fk_feedback } });
 }
 
@@ -62,22 +61,6 @@ async function update(params) {
 
     return notation.get();
 }
-
-// async function noteFeedback(params) {
-//     const notation = await getNotation(id);
-
-//     // validate
-//     const notationnameChanged = params.notationname && notation.notationname !== params.notationname;
-//     if (notationnameChanged && await db.Notations.findOne({ where: { notationname: params.notationname } })) {
-//         throw 'Username "' + params.notationname + '" is already taken';
-//     }
-
-//     // copy params to notation and save
-//     Object.assign(notation, params);
-//     await notation.save();
-
-//     return notation.get();
-// }
 
 async function _delete(fk_feedback, fk_user) {
     const notation = await getNotation(fk_feedback, fk_user);

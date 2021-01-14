@@ -1,5 +1,7 @@
 ﻿import express from 'express';
 const router = express.Router();
+export default router;
+
 import Joi from 'joi';
 import validateRequest from '../_middleware/validate-request.js';
 import authorize from '../_middleware/authorize.js';
@@ -15,9 +17,6 @@ router.put('/:id', authorize(), updateSchema, update);
 router.delete('/:id', authorize(), _delete);
 router.post('/', authorize(), createSchema, create);
 router.post('/feedback/:id', authorize(), updateSchema, noteFeedback);
-
-export default router;
-
 
 
 function getAll(req, res, next) {

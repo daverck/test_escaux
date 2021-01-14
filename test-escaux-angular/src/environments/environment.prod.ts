@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:4000'
+  apiUrl: 'https://escaux.serck.duckdns.org/test_escaux_api/'
 };

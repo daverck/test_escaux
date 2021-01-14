@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User, Comment } from '@app/_models';
 import { CommentService, NotationService, AccountService, AlertService } from '@app/_services';
@@ -10,6 +10,8 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./comment.component.less']
 })
 export class CommentComponent implements OnInit {
+  @Output() 
+  newCommentEvent = new EventEmitter<void>();
   @Input()
   readonly: boolean = true;
   @Input()
@@ -45,19 +47,15 @@ export class CommentComponent implements OnInit {
       .subscribe({
           next: (x) => {
               this.comment_ = x;
-              // this.alertService.success('Feedback added successfully', { keepAfterRouteChange: true });
-              // this.router.navigate(['../'], { relativeTo: this.route });
           },
           error: error => {
               this.alertService.error(error);
-              // this.loading = false;
           }
       });
     }
   }
 
   onSubmit(commentData) {
-    // commentData.pk = this.pk;
     commentData.fk_user = this.user.id;
     commentData.fk_feedback = this.fk_feedback;
     console.log(commentData);
@@ -69,12 +67,11 @@ export class CommentComponent implements OnInit {
       .pipe(first())
               .subscribe({
                   next: () => {
-                      this.alertService.success('Feedback added successfully', { keepAfterRouteChange: true });
-                      // this.router.navigate(['../'], { relativeTo: this.route });
+                      this.alertService.success('Comment added successfully', { keepAfterRouteChange: true });
+                      this.newCommentEvent.emit();
                   },
                   error: error => {
                       this.alertService.error(error);
-                      // this.loading = false;
                   }
               });
       console.warn('Your comment has been submitted', commentData);
@@ -85,20 +82,12 @@ export class CommentComponent implements OnInit {
       .subscribe({
           next: () => {
               this.alertService.success('Update successful', { keepAfterRouteChange: true });
-              // this.router.navigate(['../../'], { relativeTo: this.route });
           },
           error: error => {
               this.alertService.error(error);
-              // this.loading = false;
           }
       });
     }
-  }
-
-  onNotation(notation)
-  {
-
-
   }
 
 }

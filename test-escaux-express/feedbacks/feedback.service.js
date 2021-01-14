@@ -21,7 +21,8 @@ async function getById(id) {
 
 async function create(params) {
     // save feedback
-    await db.Feedbacks.create(params);
+    const feedback = await db.Feedbacks.create(params);
+    return feedback;
 }
 
 async function update(id, params) {

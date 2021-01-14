@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User, Notation, Feedback } from '@app/_models';
 import { FeedbackService, NotationService, AccountService, AlertService } from '@app/_services';
@@ -10,6 +10,8 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./feedback.component.scss']
 })
 export class FeedbackComponent implements OnInit {
+  @Output() 
+  newFeedbackEvent = new EventEmitter<Feedback>();
   @Input()
   readonly: boolean = false;
   defaultRate: number = 5;
@@ -44,22 +46,26 @@ export class FeedbackComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.pk)
-      {
-        this.feedbackService.getById(this.pk)
-          .pipe(first())
-          .subscribe({
-              next: (x) => {
-                  this.feedback = x;
-                  // this.alertService.success('Feedback added successfully', { keepAfterRouteChange: true });
-                  // this.router.navigate(['../'], { relativeTo: this.route });
-              },
-              error: error => {
-                  this.alertService.error(error);
-                  // this.loading = false;
-              }
-          });
-        
-        this.notationService.getTotalNotationForFeedback(this.pk)
+    {
+      this.feedbackService.getById(this.pk)
+        .pipe(first())
+        .subscribe({
+            next: (x) => {
+                this.feedback = x;
+            },
+            error: error => {
+                this.alertService.error(error);
+            }
+        });
+    }
+
+    this.getTotalNotation();
+  }
+
+  getTotalNotation(){
+    if (this.pk)
+    {
+      this.notationService.getTotalNotationForFeedback(this.pk)
         .pipe(first())
         .subscribe({
             next: (x) => {
@@ -67,10 +73,9 @@ export class FeedbackComponent implements OnInit {
             },
             error: error => {
                 this.alertService.error(error);
-                // this.loading = false;
             }
         });
-      }
+    }
   }
 
   onSubmit(feedbackData) {
@@ -83,16 +88,14 @@ export class FeedbackComponent implements OnInit {
     this.feedbackService.create(feedbackData)
         .pipe(first())
                 .subscribe({
-                    next: () => {
+                    next: (x: any) => {
                         this.alertService.success('Feedback added successfully', { keepAfterRouteChange: true });
-                        // this.router.navigate(['../'], { relativeTo: this.route });
+                        this.newFeedbackEvent.emit(x.feedback as Feedback);
                     },
                     error: error => {
                         this.alertService.error(error);
-                        // this.loading = false;
                     }
                 });
-    // console.warn('Your feedback has been submitted', feedbackData);
   }
 
   onNotation(note: number) {
@@ -106,11 +109,10 @@ export class FeedbackComponent implements OnInit {
                 .subscribe({
                     next: () => {
                         this.alertService.success('Notation saved successfully', { keepAfterRouteChange: true });
-                        // this.router.navigate(['../'], { relativeTo: this.route });
+                        this.getTotalNotation();
                     },
                     error: error => {
                         this.alertService.error(error);
-                        // this.loading = false;
                     }
                 });
   }

@@ -21,8 +21,12 @@ export class CommentListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //if !this.feedback_pk throw
     this.list_comment = this.CommentService.getAllForFeedback(this.feedback_pk);
   }
 
+  commentAdded(x) {
+    console.log("called");
+    
+    this.list_comment = this.CommentService.getAllForFeedback(this.feedback_pk);
+  }
 }

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { User, Feedback, Comment, Notation } from '@app/_models';
 import { FeedbackService, AccountService, AlertService } from '@app/_services';
+import { CommentListComponent } from '../comment-list/comment-list.component';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class FeedbackBrowseComponent implements OnInit {
   feedback: Feedback;
   user: User;
   commentForm: FormGroup;
+  @ViewChild("commentsForFeedback") commentListCmp:CommentListComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,9 +27,6 @@ export class FeedbackBrowseComponent implements OnInit {
     private accountService: AccountService,
     private alertService: AlertService
 ) {
-  // this.feedbackForm = this.formBuilder.group({
-  //   note: this.note
-  // });
   this.user = this.accountService.userValue;
 }
 
@@ -38,12 +37,9 @@ export class FeedbackBrowseComponent implements OnInit {
                 .subscribe({
                   next: (x) => {
                       this.feedback = x;
-                      // this.alertService.success('Feedback added successfully', { keepAfterRouteChange: true });
-                      // this.router.navigate(['../'], { relativeTo: this.route });
                   },
                   error: error => {
                       this.alertService.error(error);
-                      // this.loading = false;
                   }
               });
   }

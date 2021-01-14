@@ -1,7 +1,7 @@
 <div class="container">
     <h1>List of feedbacks</h1>
 
-    <app-feedback [readonly]=false></app-feedback>
+    <app-feedback [readonly]=false (newFeedbackEvent)="addFeedback($event)"></app-feedback>
     <!-- <app-feedback [readonly]=true></app-feedback> -->
     <app-feedback *ngFor="let feedback of list_feedback | async" 
         [pk]=feedback.pk
